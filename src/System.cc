@@ -88,17 +88,16 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     //Create the Map
     if (!bReuse)
     {
-        mpMap = new Map();
-    }
-
-	if (bReuse)
-	{
-		LoadMap("Slam_Map.bin");
+       mpMap = new Map();
+    }else
+	   // if (bReuse)
+	  {
+		   LoadMap("Slam_Map.bin");
 
         //mpKeyFrameDatabase->set_vocab(mpVocabulary);
 
-        vector<ORB_SLAM2::KeyFrame*> vpKFs = mpMap->GetAllKeyFrames();
-        for (vector<ORB_SLAM2::KeyFrame*>::iterator it = vpKFs.begin(); it != vpKFs.end(); ++it) {
+       vector<ORB_SLAM2::KeyFrame*> vpKFs = mpMap->GetAllKeyFrames();
+       for (vector<ORB_SLAM2::KeyFrame*>::iterator it = vpKFs.begin(); it != vpKFs.end(); ++it) {
             (*it)->SetKeyFrameDatabase(mpKeyFrameDatabase);
             (*it)->SetORBvocabulary(mpVocabulary);
             (*it)->SetMap(mpMap);
@@ -124,9 +123,8 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
         }
 
 
-	}
-	cout << endl << mpMap <<" : is the created map address" << endl;
-
+	  }
+	  cout << endl << mpMap <<" : is the created map address" << endl;
 
     //Create Drawers. These are used by the Viewer
     mpFrameDrawer = new FrameDrawer(mpMap, bReuse);
@@ -196,6 +194,7 @@ cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const
             mbDeactivateLocalizationMode = false;
         }
     }
+
 
     // Check reset
     {
@@ -299,6 +298,7 @@ cv::Mat System::TrackMonocular(const cv::Mat &im, const double &timestamp)
         }
     }
 
+    
     // Check reset
     {
     unique_lock<mutex> lock(mMutexReset);
@@ -317,9 +317,6 @@ cv::Mat System::TrackMonocular(const cv::Mat &im, const double &timestamp)
     mTrackedKeyPointsUn = mpTracker->mCurrentFrame.mvKeysUn;
 
     return Tcw;
-    //return (mpTracker->GrabImageMonocular(im,timestamp)).clone();
-    // return (mpTracker->GrabImageMonocular(im,timestamp));
-
 }
 
 void System::ActivateLocalizationMode()
