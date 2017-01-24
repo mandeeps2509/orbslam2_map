@@ -236,3 +236,33 @@ This is the default mode. The system runs in parallal three threads: Tracking, L
 
 ### Localization Mode
 This mode can be used when you have a good map of your working area. In this mode the Local Mapping and Loop Closing are deactivated. The system localizes the camera in the map (which is no longer updated), using relocalization if needed.
+
+#10. Docker image
+
+A Dockerfile is provided under the /docker directory and the image is available in docker hub. You can, of course, modify the Dockerfile and build your own image.
+
+### Build Docker image
+There are two Dockerfile provided. The "Dockerfile.ubuntu" is used to build the Ubuntu and third-party libs.
+
+```
+docker build -t orb_slam2:build -f Dockerfile.ubuntu ./docker
+docker build -t orb_slam2:dev -f Dockerfile ./docker
+```
+
+### Pull Docker image
+
+The ORB-SLAM2 lib and the examples are built under */opt/ORB_SLAM2*
+```
+docker pull youyu/orb_slam2:latest
+```
+
+### Run ORB-SLAM2 Docker image
+
+You have to run the Docker image under the GUI (X) environment.
+
+```
+docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  youyu/orb-slam2:latest
+```
+
+You have to use "-v" to mount your local data directory into the container.
+Check Docker doc for more detailed information.
