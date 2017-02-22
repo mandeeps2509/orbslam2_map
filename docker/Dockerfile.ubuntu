@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y \
 	libx264-dev libqt4-dev libqt4-opengl-dev \
 	sphinx-common libv4l-dev libdc1394-22-dev \
 	libavcodec-dev libavformat-dev libswscale-dev \
-	libglew-dev libboost-dev libboost-serialization-dev \
+	libglew-dev libboost-dev libboost-python-dev libboost-serialization-dev \
 	htop nano wget git unzip \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -50,4 +50,3 @@ RUN cd /opt && wget https://codeload.github.com/opencv/opencv/zip/$OPENCV -O ope
 && cd Pangolin && mkdir build && cd build && cmake  .. \
 && make -j4 && make install \
 && rm -rf /opt/*
-
