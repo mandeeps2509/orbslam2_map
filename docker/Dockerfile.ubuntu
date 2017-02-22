@@ -36,12 +36,7 @@ RUN apt-get update && apt-get install -y \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN cd /opt && wget https://codeload.github.com/opencv/opencv/zip/$OPENCV -O opencv.zip \
-&& unzip opencv.zip \
-&& cd opencv-$OPENCV && mkdir build && cd build \
-&& cmake -D CMAKE_BUILD_TYPE=RELEASE -D WITH_CUDA=OFF -D WITH_OPENGL=OFF .. \
-&& make -j4 && make install \
-&& cd /opt && wget http://bitbucket.org/eigen/eigen/get/3.2.10.tar.gz -O eigen3.tgz \
+RUN cd /opt && wget http://bitbucket.org/eigen/eigen/get/3.2.10.tar.gz -O eigen3.tgz \
 && tar zxvf eigen3.tgz && cd  eigen-eigen-b9cd8366d4e8 \
 && mkdir build && cd build \
 && cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RELEASE .. \
@@ -49,5 +44,10 @@ RUN cd /opt && wget https://codeload.github.com/opencv/opencv/zip/$OPENCV -O ope
 && cd /opt && git clone https://github.com/stevenlovegrove/Pangolin.git \
 && cd Pangolin && mkdir build && cd build && cmake  .. \
 && make -j4 && make install \
-&& rm -rf /opt/*
+&& cd /opt && wget https://codeload.github.com/opencv/opencv/zip/$OPENCV -O opencv.zip \
+&& unzip opencv.zip \
+&& cd opencv-$OPENCV && mkdir build && cd build \
+&& cmake -D CMAKE_BUILD_TYPE=RELEASE -D WITH_CUDA=OFF -D WITH_OPENGL=OFF .. \
+&& make -j4 && make install \
+&& rm -rf /opt/* && ldconfig
 
