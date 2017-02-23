@@ -50,4 +50,3 @@ RUN cd /opt && wget http://bitbucket.org/eigen/eigen/get/3.2.10.tar.gz -O eigen3
 && cmake -D CMAKE_BUILD_TYPE=RELEASE -D WITH_CUDA=OFF -D WITH_OPENGL=OFF .. \
 && make -j4 && make install \
 && rm -rf /opt/* && ldconfig
-
