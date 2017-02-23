@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y \
 	libx264-dev libqt4-dev libqt4-opengl-dev \
 	sphinx-common libv4l-dev libdc1394-22-dev \
 	libavcodec-dev libavformat-dev libswscale-dev \
-	libglew-dev libboost-dev libboost-serialization-dev \
+	libglew-dev libboost-dev libboost-python-dev libboost-serialization-dev \
 	htop nano wget git unzip \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -44,10 +44,10 @@ RUN cd /opt && wget http://bitbucket.org/eigen/eigen/get/3.2.10.tar.gz -O eigen3
 && cd /opt && git clone https://github.com/stevenlovegrove/Pangolin.git \
 && cd Pangolin && mkdir build && cd build && cmake  .. \
 && make -j4 && make install \
+<<<<<<< HEAD
 && cd /opt && wget https://codeload.github.com/opencv/opencv/zip/$OPENCV -O opencv.zip \
 && unzip opencv.zip \
 && cd opencv-$OPENCV && mkdir build && cd build \
 && cmake -D CMAKE_BUILD_TYPE=RELEASE -D WITH_CUDA=OFF -D WITH_OPENGL=OFF .. \
 && make -j4 && make install \
 && rm -rf /opt/* && ldconfig
-
