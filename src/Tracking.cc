@@ -30,6 +30,8 @@
 #include"Map.h"
 #include"Initializer.h"
 
+#include<unistd.h>
+
 #include"Optimizer.h"
 #include"PnPsolver.h"
 
@@ -541,7 +543,10 @@ void Tracking::Track()
     else
     {
         // This can happen if tracking is lost
-        mlRelativeFramePoses.push_back(mlRelativeFramePoses.back());
+        if(mlRelativeFramePoses.size() != 0)    //segmentation fault work around by GarfieldTay comment in Issue 19
+        {
+            mlRelativeFramePoses.push_back(mlRelativeFramePoses.back());
+        }
         mlpReferences.push_back(mlpReferences.back());
         mlFrameTimes.push_back(mlFrameTimes.back());
         mlbLost.push_back(mState==LOST);

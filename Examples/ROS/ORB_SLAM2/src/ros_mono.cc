@@ -23,6 +23,7 @@
 #include<algorithm>
 #include<fstream>
 #include<chrono>
+#include <iomanip>
 
 #include<ros/ros.h>
 #include <cv_bridge/cv_bridge.h>
@@ -106,15 +107,26 @@ int main(int argc, char **argv)
         return 1;
     }    
 
+    cout << endl <<"bReuseMap:"<<bReuseMap;
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
 	if (!strcmp(argv[3], "true"))
     {
 		bReuseMap = true;
-	}
-   	ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::MONOCULAR,true, bReuseMap);
+        cout << "TRUE LoadMap";
+	//}
+   	//ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::MONOCULAR,true, bReuseMap);
+    }
+    else{
+    	cout << "FALSE LoadMap";
+        //argv[4]="";
+        //ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::MONOCULAR,true,bReuseMap);
+
+    }
+        ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::MONOCULAR,true,bReuseMap,argv[4]);
     
+
     //if (bReuseMap)
-		//SLAM.LoadMap("Slam_Map.bin");
+                //SLAM.LoadMap("Slam_latest_Map.bin");
     
 	ImageGrabber igb(&SLAM);
 

@@ -266,3 +266,36 @@ docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  youyu/
 
 You have to use "-v" to mount your local data directory into the container.
 Check Docker doc for more detailed information.
+
+### Develop ORB-SLAM2 with Ubuntu build image
+
+You can develop and compile ORB-SLAM2 with a pre-build Ubuntu 16.04 image, with all 3rd-party dependencies resolved already.
+
+```
+docker run -it --rm -v $(pwd):/ORM_SLAM2 youyu/ubuntu:16.04
+cd /ORB_SLAM2
+./build.sh
+
+```
+
+
+### Save and Load Map:
+
+Usage for ROS Mono on KITTI Dataset without loading the latest saved map: 
+
+```
+rosrun ORB_SLAM2 Mono Vocabulary/ORBvoc.bin Examples/Monocular/KITTI04-12.yaml false
+```
+
+### TO DO: Fix the bug to load saved map
+
+For loading saved map: (currently have issue) which is stated in raulmur/ORB_SLAM2/issues/19 comment by 'chwimmer'
+
+```
+terminate called after throwing an instance of 'boost::archive::archive_exception'
+  what():  input stream error
+Aborted (core dumped)
+```
+
+
+

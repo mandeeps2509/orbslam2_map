@@ -26,6 +26,8 @@
 #include <pangolin/pangolin.h>
 #include <iomanip>
 
+#include<unistd.h>
+
 bool has_suffix(const std::string &str, const std::string &suffix) {
   std::size_t index = str.find(suffix, str.size() - suffix.size());
   return (index != std::string::npos);
@@ -36,7 +38,7 @@ namespace ORB_SLAM2
 
 System::System(const string &strVocFile, const string &strSettingsFile, const eSensor sensor,
                // const bool bUseViewer):mSensor(sensor), mpViewer(static_cast<Viewer*>(NULL)), mbReset(false),mbActivateLocalizationMode(false),
-               const bool bUseViewer, const bool bReuse, const string & mapFilePath):mSensor(sensor),mbReset(false),mbActivateLocalizationMode(bReuse),
+               const bool bUseViewer, const bool bReuse, const string &mapFilePath):mSensor(sensor),mbReset(false),mbActivateLocalizationMode(bReuse),
         mbDeactivateLocalizationMode(false)
 {
     // Output welcome message
@@ -83,7 +85,11 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     }
     cout << "Vocabulary loaded!" << endl << endl;
     //Create KeyFrame Database
+    cout << endl <<"debug";
+
     mpKeyFrameDatabase = new KeyFrameDatabase(*mpVocabulary);
+
+    cout << endl <<"bReuse:" << bReuse;
 
     //Create the Map
     if (!bReuse)
@@ -92,8 +98,11 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     }else
 	   // if (bReuse)
 	  {
-           //LoadMap("Slam_Map.bin");
-           LoadMap(mapFilePath.c_str());
+            cout << endl << "before loadmap" << endl;
+           //LoadMap("Slam_latest_Map.bin");
+            LoadMap(mapFilePath.c_str());
+           cout << endl <<"after loadmap" << endl;
+           //
 
         //mpKeyFrameDatabase->set_vocab(mpVocabulary);
 
@@ -374,11 +383,11 @@ void System::Shutdown()
 
 void System::LoadMap(const string &filename)
 {
-    {
+    
         std::ifstream is(filename);
+    {
 
-
-        boost::archive::binary_iarchive ia(is, boost::archive::no_header);
+        ::boost::archive::binary_iarchive ia(is, boost::archive::no_header);
         //ia >> mpKeyFrameDatabase;
         ia >> mpMap;
 
